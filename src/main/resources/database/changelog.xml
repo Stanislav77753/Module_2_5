@@ -62,4 +62,15 @@
             </column>
         </createTable>
     </changeSet>
+    <changeSet id="3" author="Stas" runOnChange="true">
+        <insert tableName="roles">
+            <column name="role_name" value="ROLE_USER"></column>
+        </insert>
+        <insert tableName="roles">
+            <column name="role_name" value="ROLE_MODERATOR"></column>
+        </insert>
+        <insert tableName="roles">
+            <column name="role_name" value="ROLE_ADMIN"></column>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

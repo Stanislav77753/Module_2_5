@@ -8,15 +8,16 @@
 		http://www.springframework.org/schema/security/spring-security.xsd">
 
     <http auto-config="true">
-        <intercept-url pattern="/" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_MODERATOR')"/>
-        <intercept-url pattern="/welcome" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_MODERATOR')"/>
-        <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/all_users" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/myapplication" access="allowAll"/>
+        <intercept-url pattern="/myapplication/user/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_MODERATOR')"/>
+        <intercept-url pattern="/myapplication/moderator/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')"/>
+        <intercept-url pattern="/myapplication/admin/**" access="hasRole('ROLE_ADMIN')"/>
 
-        <form-login login-page="/login" default-target-url="/welcome" authentication-failure-url="/login?error"
+        <form-login login-page="/myapplication/login" default-target-url="/myapplication/login/result"
+                    authentication-failure-url="/myapplication/login?error"
                     username-parameter="userName" password-parameter="password"/>
 
-        <logout logout-success-url="/login"/>
+        <logout logout-success-url="/myapplication/login"/>
     </http>
 
     <authentication-manager alias="authenticationManager">
@@ -26,7 +27,7 @@
     </authentication-manager>
 
     <beans:bean id="userDetailsServiceImpl"
-                class="com.popovich.springsecurityapp.service.imp.UserDetailsServiceImpl"></beans:bean>
+                class="com.popovich.springapp.service.imp.UserDetailsServiceImpl"></beans:bean>
 
     <beans:bean id="encoder"
                 class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
