@@ -18,5 +18,5 @@ public class Department extends BaseEntity {
     private String name;
 
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<User> users = new HashSet<>();
+    private Set<Employee> employees = new HashSet<>();
 }

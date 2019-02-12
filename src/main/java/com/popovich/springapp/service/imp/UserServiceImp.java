@@ -16,6 +16,7 @@ import java.util.Set;
 @Service
 public class UserServiceImp implements UserService {
 
+    public UserServiceImp() { }
 
     @Autowired
     private UserDao userDao;

@@ -6,6 +6,7 @@
 
     <mvc:annotation-driven/>
     <mvc:resources mapping="/resources/**" location="/resources/"/>
+    <mvc:view-controller path="/myapplication" view-name="index" />
 
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

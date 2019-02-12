@@ -8,16 +8,19 @@
 		http://www.springframework.org/schema/security/spring-security.xsd">
 
     <http auto-config="true">
-        <intercept-url pattern="/myapplication" access="allowAll"/>
+        <intercept-url pattern="/myapplication" access="permitAll"/>
         <intercept-url pattern="/myapplication/user/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_MODERATOR')"/>
         <intercept-url pattern="/myapplication/moderator/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')"/>
         <intercept-url pattern="/myapplication/admin/**" access="hasRole('ROLE_ADMIN')"/>
 
-        <form-login login-page="/myapplication/login" default-target-url="/myapplication/login/result"
+        <form-login login-page="/myapplication" default-target-url="/myapplication/login/result"
+                    login-processing-url="/myapplication/login/process"
                     authentication-failure-url="/myapplication/login?error"
                     username-parameter="userName" password-parameter="password"/>
 
-        <logout logout-success-url="/myapplication/login"/>
+        <logout logout-success-url="/myapplication"/>
+        <remember-me user-service-ref="userDetailsServiceImpl" key="myKey" token-validity-seconds="300"/>
+        <csrf disabled="true"/>
     </http>
 
     <authentication-manager alias="authenticationManager">
@@ -27,7 +30,8 @@
     </authentication-manager>
 
     <beans:bean id="userDetailsServiceImpl"
-                class="com.popovich.springapp.service.imp.UserDetailsServiceImpl"></beans:bean>
+                class="com.popovich.springapp.service.imp.UserDetailsServiceImpl">
+    </beans:bean>
 
     <beans:bean id="encoder"
                 class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
