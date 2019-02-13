@@ -9,9 +9,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class SecurityServiceImp implements SecurityService {
+
+    private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImp.class);
 
     @Autowired
     AuthenticationManager authenticationManager;
@@ -38,6 +42,7 @@ public class SecurityServiceImp implements SecurityService {
         authenticationManager.authenticate(authenticationToken);
         if(authenticationToken.isAuthenticated()){
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            logger.debug(String.format("Successfully %s auto logged in", userName));
         }
     }
 }

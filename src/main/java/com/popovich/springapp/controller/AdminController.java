@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class UserController {
+public class AdminController {
     @Autowired
     private UserService userService;
 
@@ -16,10 +16,10 @@ public class UserController {
         return userService;
     }
 
-    @RequestMapping(value = "/myapplication/user", method = RequestMethod.GET)
-    public ModelAndView userAccount(){
+    @RequestMapping(value = "/myapplication/admin", method = RequestMethod.GET)
+    public ModelAndView adminAccount(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("user_page");
+        modelAndView.setViewName("admin_page");
         return modelAndView;
     }
 }
