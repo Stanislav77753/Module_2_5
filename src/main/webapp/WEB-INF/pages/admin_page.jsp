@@ -23,6 +23,10 @@
     </c:if>
     <h2> <a onclick="document.forms['logoutForm'].submit()">Logout</a>
     </h2>
+
+    <h2>
+        <a href="<c:url value="/myapplication/admin/users"/>">Show all users</a>
+    </h2>
 </c:if>
 </body>
 </html>

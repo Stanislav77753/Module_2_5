@@ -42,7 +42,7 @@ public class LoginController {
     }
 
 
-    @RequestMapping(value = "/myapplication", method = RequestMethod.GET)
+    @RequestMapping(value = {"/","/myapplication"}, method = RequestMethod.GET)
     public ModelAndView login(){
         logger.info("Trying to log in.");
         ModelAndView modelAndView = new ModelAndView();
@@ -58,6 +58,5 @@ public class LoginController {
         modelAndView.setViewName("login_result_page");
         return modelAndView;
     }
-
 
 }

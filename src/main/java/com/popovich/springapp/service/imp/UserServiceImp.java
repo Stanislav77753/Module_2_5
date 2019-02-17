@@ -8,6 +8,7 @@ import com.popovich.springapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -46,5 +47,22 @@ public class UserServiceImp implements UserService {
     public List<User> getAllUsers() {
         return userDao.findAll();
     }
+
+    @Override
+    public User getById(Long id) {
+        return userDao.findOne(id);
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        userDao.delete(id);
+    }
+
+    @Override
+    @Transactional
+    public void updateUser(User user) {
+        userDao.updateUser(user.getUserName(), user.getRoles(), user.getId());
+    }
+
 
 }

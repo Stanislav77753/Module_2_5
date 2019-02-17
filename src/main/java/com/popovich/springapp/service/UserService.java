@@ -10,4 +10,7 @@ public interface UserService {
 
     User findByUsername(String userName);
     List<User> getAllUsers();
+    User getById(Long id);
+    void deleteUser(Long id);
+    void updateUser(User user);
 }
