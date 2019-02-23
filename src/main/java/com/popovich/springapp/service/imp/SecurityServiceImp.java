@@ -25,7 +25,6 @@ public class SecurityServiceImp implements SecurityService {
 
     @Override
     public String findLoggedInUsername() {
-        System.out.println("\n" + "----------------findLoggedInUsername-------------------" + "\n");
         Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
         if(userDetails instanceof UserDetails){
             return ((UserDetails) userDetails).getUsername();
@@ -35,7 +34,6 @@ public class SecurityServiceImp implements SecurityService {
 
     @Override
     public void autoLogin(String userName, String password) {
-        System.out.println("\n" + "----------------autoLogin-------------------" + "\n");
         UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());

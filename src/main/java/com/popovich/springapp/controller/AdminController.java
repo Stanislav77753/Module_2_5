@@ -17,9 +17,11 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 
 @Controller
+@RequestMapping("/myapplication/admin")
 public class AdminController {
 
     @Autowired
@@ -35,34 +37,34 @@ public class AdminController {
         return userService;
     }
 
-    @RequestMapping(value = "/myapplication/admin", method = RequestMethod.GET)
+    @RequestMapping( method = RequestMethod.GET)
     public ModelAndView adminAccount(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin_page");
         return modelAndView;
     }
 
-    @RequestMapping(value = "/myapplication/admin/users", method = RequestMethod.GET)
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
     public String listUsers(Model model){
         model.addAttribute("user", new User());
         model.addAttribute("listUsers", this.userService.getAllUsers());
         return "admin_users_page";
     }
 
-    @RequestMapping("/myapplication/admin/users/pre_edit/{id}")
+    @RequestMapping("/users/pre_edit/{id}")
     public String preEditUser(@PathVariable("id") Long id, Model model){
         model.addAttribute("user", this.userService.getById(id));
         model.addAttribute("listUsers", this.userService.getAllUsers());
         return "admin_users_page";
     }
 
-    @RequestMapping("/myapplication/admin/users/delete/{id}")
+    @RequestMapping("/users/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id){
         userService.deleteUser(id);
         return "redirect:/myapplication/admin/users";
     }
 
-    @RequestMapping("/myapplication/admin/users/edit")
+    @RequestMapping("/users/edit")
     public String editUser(@ModelAttribute("user") User user){
         userService.updateUser(user);
         return "redirect:/myapplication/admin/users";

@@ -5,8 +5,6 @@ import com.popovich.springapp.model.User;
 import com.popovich.springapp.service.SecurityService;
 import com.popovich.springapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.security.Principal;
 
 @Controller
 public class LoginController {
@@ -56,6 +56,19 @@ public class LoginController {
         logger.info("login result.");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login_result_page");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/myapplication/accessDenied", method = RequestMethod.GET)
+    public ModelAndView accessDenied(Principal user){
+        ModelAndView modelAndView = new ModelAndView();
+        if(user != null){
+            modelAndView.addObject("errorMsg", user.getName()
+                    + " you don't have access to this page");
+        }else{
+            modelAndView.addObject("errorMsg", "You don't have access to this page");
+        }
+        modelAndView.setViewName("access_denied_page");
         return modelAndView;
     }
 

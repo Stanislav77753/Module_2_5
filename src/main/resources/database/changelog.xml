@@ -6,7 +6,11 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
+
+    <!--CREATING TABLES-->
     <changeSet id="1" author="Stas" runOnChange="true">
+
+        <!--CREATING USERS TABLE-->
         <createTable tableName="users">
         <column  name="id" type="int" autoIncrement="true">
             <constraints primaryKey="true" unique="true" nullable="false"/>
@@ -19,6 +23,8 @@
         </column>
         </createTable>
 
+
+        <!--CREATING EMPLOYEES TABLE-->
         <createTable tableName="employees">
             <column  name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" unique="true" nullable="false"/>
@@ -43,6 +49,8 @@
             </column>
         </createTable>
 
+
+        <!--CREATING ROLES TABLE-->
         <createTable tableName="roles">
             <column  name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" unique="true" nullable="false"/>
@@ -52,6 +60,29 @@
             </column>
         </createTable>
 
+
+        <!--CREATING PRIVILEGES TABLE-->
+        <createTable tableName="privileges">
+            <column  name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" unique="true" nullable="false"/>
+            </column>
+            <column  name="role_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="privilege_name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!--CREATING FOREIGN KEY IN PRIVILEGES TABLE-->
+        <addForeignKeyConstraint baseTableName="privileges"
+                                 baseColumnNames="role_id"
+                                 constraintName="fk_privileges_role"
+                                 referencedTableName="roles"
+                                 referencedColumnNames="id"/>
+
+
+        <!--CREATING DEPARTMENT TABLE-->
         <createTable tableName="departments">
             <column  name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" unique="true" nullable="false"/>
@@ -60,8 +91,9 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-    </changeSet>
-    <changeSet id="2" author="Stas" runOnChange="true">
+
+
+        <!--CREATING USER_ROLES TABLE-->
         <createTable tableName="user_roles">
             <column  name="user_id" type="int">
                 <constraints nullable="false"/>
@@ -70,16 +102,47 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
+
     </changeSet>
-    <changeSet id="3" author="Stas" runOnChange="true">
+
+    <!--INSERTING INITIAL DATA IN TABLES-->
+    <changeSet id="2" author="Stas" runOnChange="true">
+
+        <!--INSERTING ROLES-->
         <insert tableName="roles">
-            <column name="role_name" value="ROLE_USER"></column>
+            <column name="role_name" value="USER"></column>
         </insert>
         <insert tableName="roles">
-            <column name="role_name" value="ROLE_MODERATOR"></column>
+            <column name="role_name" value="MODERATOR"></column>
         </insert>
         <insert tableName="roles">
-            <column name="role_name" value="ROLE_ADMIN"></column>
+            <column name="role_name" value="ADMIN"></column>
+        </insert>
+
+        <!--INSERTING PRIVILEGES-->
+        <insert tableName="privileges">
+            <column name="role_id" value="1"></column>
+            <column name="privilege_name" value="ROLE_USER"></column>
+        </insert>
+        <insert tableName="privileges">
+            <column name="role_id" value="2"></column>
+            <column name="privilege_name" value="ROLE_USER"></column>
+        </insert>
+        <insert tableName="privileges">
+            <column name="role_id" value="2"></column>
+            <column name="privilege_name" value="ROLE_MODERATOR"></column>
+        </insert>
+        <insert tableName="privileges">
+            <column name="role_id" value="3"></column>
+            <column name="privilege_name" value="ROLE_USER"></column>
+        </insert>
+        <insert tableName="privileges">
+            <column name="role_id" value="3"></column>
+            <column name="privilege_name" value="ROLE_MODERATOR"></column>
+        </insert>
+        <insert tableName="privileges">
+            <column name="role_id" value="3"></column>
+            <column name="privilege_name" value="ROLE_ADMIN"></column>
         </insert>
     </changeSet>
 </databaseChangeLog>

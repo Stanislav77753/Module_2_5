@@ -11,7 +11,4 @@ import java.util.Set;
 public interface UserDao extends JpaRepository<User, Long> {
     User findByUserName(String userName);
 
-    @Modifying
-    @Query("update User u set u.userName = ?1, u.roles = ?2 where u.id = ?3")
-    void updateUser(String userName, Set<Role> roles, Long id);
 }

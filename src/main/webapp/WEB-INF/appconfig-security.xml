@@ -8,6 +8,7 @@
 		http://www.springframework.org/schema/security/spring-security.xsd">
 
     <http auto-config="true">
+        <access-denied-handler error-page="/myapplication/accessDenied"/>
         <intercept-url pattern="/myapplication" access="permitAll"/>
         <intercept-url pattern="/myapplication/user/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN', 'ROLE_MODERATOR')"/>
         <intercept-url pattern="/myapplication/moderator/**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')"/>

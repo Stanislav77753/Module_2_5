@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -22,4 +19,7 @@ public class Role extends BaseEntity{
 
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
+
+    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
+    private Set<Privilege> privileges;
 }
