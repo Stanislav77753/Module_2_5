@@ -22,4 +22,14 @@ public class DepartmentServiceImpl implements DepartmentService {
     public List<Department> getAllDepartment() {
         return departmentDao.findAll();
     }
+
+    @Override
+    public void deleteDepartment(Long id) {
+        departmentDao.delete(id);
+    }
+
+    @Override
+    public Department getById(Long id) {
+        return departmentDao.findOne(id);
+    }
 }

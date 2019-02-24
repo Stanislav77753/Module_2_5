@@ -10,6 +10,7 @@
 </head>
 <body>
 <c:if test="${!empty listUsers}">
+    <h1>Users</h1>
     <table class="tg">
         <tr>
             <th width="80">ID</th>
@@ -35,7 +36,7 @@
 </c:if>
 <br/>
 <h2>
-    <a href="<c:url value="/myapplication/admin/users/add"/>">Add user</a>
+    <a href="<c:url value="/myapplication/admin/users/add"/>">Add new user</a>
 </h2>
 <h2>
     <a href="<c:url value="/myapplication/admin"/>">to admin page</a>

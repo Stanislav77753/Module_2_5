@@ -1,6 +1,5 @@
 package com.popovich.springapp.controller;
 
-
 import com.popovich.springapp.model.Employee;
 import com.popovich.springapp.model.Role;
 import com.popovich.springapp.model.User;
@@ -25,23 +24,14 @@ import java.util.*;
 public class AdminController {
 
     @Autowired
-    private DepartmentService departmentService;
-
-    @Autowired
-    private EmployeeService employeeService;
-
-    @Autowired
     private RoleService roleService;
 
     @Autowired
     private UserService userService;
 
-    public UserService getUserService() {
-        return userService;
-    }
 
     @RequestMapping( method = RequestMethod.GET)
-    public ModelAndView adminAccount(){
+    public ModelAndView adminPage(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin_page");
         return modelAndView;
@@ -57,20 +47,13 @@ public class AdminController {
     @RequestMapping(value = "/users/add", method = RequestMethod.GET)
     public String addUser(Model model){
         model.addAttribute("user", new User());
-        return "admin_add_user";
+        return "admin_user_add_page";
     }
 
     @RequestMapping(value = "/users/add", method = RequestMethod.POST)
     public String addUser(@ModelAttribute("user") User user){
         userService.save(user);
         return "redirect:/myapplication/admin/users";
-    }
-
-    @RequestMapping(value = "/employees", method = RequestMethod.GET)
-    public String listEmployees(Model model){
-        model.addAttribute("user", new Employee());
-        model.addAttribute("listEmployees", this.employeeService.getAllEmployees());
-        return "admin_employees_page";
     }
 
     @RequestMapping("/users/edit/{id}")
@@ -83,7 +66,7 @@ public class AdminController {
         model.addAttribute("user", this.userService.getById(id));
         model.addAttribute("listUsers", this.userService.getAllUsers());
         model.addAttribute("all_roles", rol);
-        return "admin_user_edit";
+        return "admin_user_edit_page";
     }
 
     @RequestMapping("/users/delete/{id}")
@@ -107,4 +90,7 @@ public class AdminController {
         userService.updateUser(user);
         return "redirect:/myapplication/admin/users";
     }
+
+
+
 }
