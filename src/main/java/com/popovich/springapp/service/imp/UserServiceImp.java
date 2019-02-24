@@ -60,8 +60,10 @@ public class UserServiceImp implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(User user) {
-
+    public void updateUser(User changedUser) {
+        User user = getById(changedUser.getId());
+        user.setRoles(changedUser.getRoles());
+        userDao.save(user);
     }
 
 

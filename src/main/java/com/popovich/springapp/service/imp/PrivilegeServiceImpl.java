@@ -4,10 +4,12 @@ import com.popovich.springapp.dao.PrivilegeDao;
 import com.popovich.springapp.model.Privilege;
 import com.popovich.springapp.service.PrivilegeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class PrivilegeServiceImpl implements PrivilegeService {
 
     public PrivilegeServiceImpl() {

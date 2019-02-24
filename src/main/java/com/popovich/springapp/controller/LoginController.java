@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.util.HashMap;
 
 @Controller
 public class LoginController {
@@ -62,6 +63,12 @@ public class LoginController {
     @RequestMapping(value = "/myapplication/accessDenied", method = RequestMethod.GET)
     public ModelAndView accessDenied(Principal user){
         ModelAndView modelAndView = new ModelAndView();
+        HashMap<String, String> map__1 = new HashMap<>();
+        map__1.put("1", "name1");
+        map__1.put("2", "name2");
+        map__1.put("3", "name3");
+        map__1.put("4", "name4");
+        modelAndView.addObject("mymap",map__1);
         if(user != null){
             modelAndView.addObject("errorMsg", user.getName()
                     + " you don't have access to this page");

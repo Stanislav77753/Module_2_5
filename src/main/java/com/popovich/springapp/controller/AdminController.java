@@ -1,9 +1,12 @@
 package com.popovich.springapp.controller;
 
+
+import com.popovich.springapp.model.Employee;
 import com.popovich.springapp.model.Role;
 import com.popovich.springapp.model.User;
 import com.popovich.springapp.service.DepartmentService;
 import com.popovich.springapp.service.EmployeeService;
+import com.popovich.springapp.service.RoleService;
 import com.popovich.springapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 @Controller
@@ -29,6 +29,9 @@ public class AdminController {
 
     @Autowired
     private EmployeeService employeeService;
+
+    @Autowired
+    private RoleService roleService;
 
     @Autowired
     private UserService userService;
@@ -51,11 +54,36 @@ public class AdminController {
         return "admin_users_page";
     }
 
-    @RequestMapping("/users/pre_edit/{id}")
+    @RequestMapping(value = "/users/add", method = RequestMethod.GET)
+    public String addUser(Model model){
+        model.addAttribute("user", new User());
+        return "admin_add_user";
+    }
+
+    @RequestMapping(value = "/users/add", method = RequestMethod.POST)
+    public String addUser(@ModelAttribute("user") User user){
+        userService.save(user);
+        return "redirect:/myapplication/admin/users";
+    }
+
+    @RequestMapping(value = "/employees", method = RequestMethod.GET)
+    public String listEmployees(Model model){
+        model.addAttribute("user", new Employee());
+        model.addAttribute("listEmployees", this.employeeService.getAllEmployees());
+        return "admin_employees_page";
+    }
+
+    @RequestMapping("/users/edit/{id}")
     public String preEditUser(@PathVariable("id") Long id, Model model){
+        List<Role> roles = this.roleService.getAllRoles();
+        List<String> rol = new ArrayList<>();
+        for(Role role : roles){
+            rol.add(role.getName());
+        }
         model.addAttribute("user", this.userService.getById(id));
         model.addAttribute("listUsers", this.userService.getAllUsers());
-        return "admin_users_page";
+        model.addAttribute("all_roles", rol);
+        return "admin_user_edit";
     }
 
     @RequestMapping("/users/delete/{id}")
@@ -64,8 +92,18 @@ public class AdminController {
         return "redirect:/myapplication/admin/users";
     }
 
-    @RequestMapping("/users/edit")
+    @RequestMapping("/users/edit/result")
     public String editUser(@ModelAttribute("user") User user){
+        List<Role> roles = roleService.getAllRoles();
+        Set<Role> newRoleSet = new HashSet<>();
+        for(String str: user.getNewRole()){
+            for(Role role: roles){
+                if(role.getName().equals(str)){
+                    newRoleSet.add(role);
+                }
+            }
+        }
+        user.setRoles(newRoleSet);
         userService.updateUser(user);
         return "redirect:/myapplication/admin/users";
     }
