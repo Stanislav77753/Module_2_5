@@ -23,4 +23,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Employee> getAllEmployees() {
         return employeeDao.findAll();
     }
+
+    @Override
+    public Employee getById(Long id) {
+        return employeeDao.findOne(id);
+    }
+
+    @Override
+    public void deleteEmployee(Long id) {
+        employeeDao.delete(id);
+    }
 }

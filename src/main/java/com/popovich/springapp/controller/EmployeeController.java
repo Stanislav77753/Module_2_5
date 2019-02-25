@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -58,4 +59,48 @@ public class EmployeeController {
         }
         return "redirect:/myapplication/admin/employees";
     }
+
+    @RequestMapping("/**/employees/edit/{id}")
+    public String preEditEmployee(@PathVariable("id") Long id, Model model){
+        List<Department> departments = this.departmentService.getAllDepartment();
+        List<String> all_department = new ArrayList<>();
+        for(Department department: departments){
+            all_department.add(department.getName());
+        }
+        Employee employee = this.employeeService.getById(id);
+        employee.setDepartmentName(employee.getDepartment().getName());
+        model.addAttribute("departmentsList", all_department);
+        model.addAttribute("employee", employee);
+        return "employee_edit_page";
+    }
+
+    @RequestMapping("/**/employees/delete/{id}")
+    public String deleteEmployee(@PathVariable("id") Long id, Principal principal){
+        employeeService.deleteEmployee(id);
+        if(principal.getName().equals("Moderator")){
+            return "redirect:/myapplication/moderator/employees";
+        }
+        return "redirect:/myapplication/admin/employees";
+    }
+
+    @RequestMapping("/**/employees/edit/result")
+    public String editUser(@ModelAttribute("employee") Employee employee, Principal principal){
+        employee.setDepartment(getActualDepartment(employee.getDepartmentName()));
+        employeeService.save(employee);
+        if(principal.getName().equals("Moderator")){
+            return "redirect:/myapplication/moderator/employees";
+        }
+        return "redirect:/myapplication/admin/employees";
+    }
+
+    private Department getActualDepartment(String departmentName){
+        List<Department> departments = this.departmentService.getAllDepartment();
+        for(Department department: departments){
+            if(department.getName().equals(departmentName)){
+                return department;
+            }
+        }
+        return null;
+    }
+
 }

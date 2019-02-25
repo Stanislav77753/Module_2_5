@@ -1,11 +1,10 @@
 package com.popovich.springapp.model;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "employees")
@@ -26,7 +25,6 @@ public class Employee extends BaseEntity {
     @JoinColumn(name = "department_id", nullable = false)
     private Department department;
 
-    @DateTimeFormat(pattern = "MM-dd-yyyy")
     @Column(name = "date_of_birth", nullable = false)
     private Date dateOfBirth;
 

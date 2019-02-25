@@ -32,7 +32,7 @@
                 Date of birth:
             </td>
             <td>
-                <form:input type="text" path="dateOfBirth" placeholder="Date of birth" ></form:input>
+                <form:input type="date" path="dateOfBirth" placeholder="Date of birth"  ></form:input>
             </td>
         </tr>
         <tr>
@@ -49,7 +49,7 @@
                 Date of employment:
             </td>
             <td>
-                <form:input type="text" path="dateOfEmployment" placeholder="Date Of Employment"></form:input>
+                <form:input type="date" path="dateOfEmployment" placeholder="Date Of Employment"></form:input>
             </td>
         </tr>
         <tr>

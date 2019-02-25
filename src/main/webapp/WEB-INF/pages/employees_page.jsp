@@ -17,8 +17,16 @@
             <th width="120">Date of employment</th>
             <th width="120">Department</th>
             <th width="120">Salary</th>
-            <th width="60">Edit</th>
-            <th width="60">Delete</th>
+            <c:choose>
+                <c:when test="${pageContext.request.isUserInRole('ROLE_ADMIN')}">
+                    <th width="60">Edit</th>
+                    <th width="60">Delete</th>
+                </c:when>
+                <c:when test="${pageContext.request.isUserInRole('ROLE_MODERATOR')}">
+                    <th width="60">Edit</th>
+                    <th width="60">Delete</th>
+                </c:when>
+            </c:choose>
         </tr>
         <c:forEach items="${listEmployees}" var="employee">
             <tr>
@@ -27,7 +35,7 @@
                 <td>${employee.name}</td>
                 <td>${employee.dateOfBirth}</td>
                 <td>${employee.dateOfEmployment}</td>
-                <td>${employee.department}</td>
+                <td>${employee.department.name}</td>
                 <td>${employee.salary}</td>
                 <c:choose>
                     <c:when test="${pageContext.request.isUserInRole('ROLE_ADMIN')}">
@@ -38,10 +46,6 @@
                         <td><a href="<c:url value='/myapplication/moderator/employees/edit/${employee.id}'/>">Edit</a></td>
                         <td><a href="<c:url value='/myapplication/moderator/employees/delete/${employee.id}'/>">Delete</a></td>
                     </c:when>
-                    <c:otherwise>
-                        <td><a href="<c:url value='/myapplication/user/employees/edit/${employee.id}'/>">Edit</a></td>
-                        <td><a href="<c:url value='/myapplication/user/employees/delete/${employee.id}'/>">Delete</a></td>
-                    </c:otherwise>
                 </c:choose>
             </tr>
         </c:forEach>
